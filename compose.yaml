@@ -1,0 +1,43 @@
+services:
+  postgres:
+    image: postgres:17
+    container_name: postgres
+    environment:
+      - TZ=Asia/Tokyo
+    env_file:
+      - ./db/.env
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+  fastapi:
+    image: kojamad28/postgres-fastapi
+    container_name: fastapi
+    build: 
+      context: .
+      args:
+        REQ_DIR: "requirements/"
+        REQ_TXT: "prod.txt"
+    command: uvicorn main:app --host=0.0.0.0 --port=8000
+    volumes:
+      - .:/usr/src
+    expose:
+      - "8000"
+    env_file:
+      - ./db/.env
+    depends_on:
+      - postgres
+  nginx:
+    image: kojamad28/fastapi-nginx
+    container_name: nginx
+    build: ./nginx
+    volumes:
+      - ./static:/usr/src/static
+      - ./media:/usr/src/media
+    ports:
+      - "80:80"
+    depends_on:
+      - fastapi
+
+volumes:
+  postgres_data:
