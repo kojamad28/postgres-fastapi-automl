@@ -5,3 +5,4 @@ fastapi[all]
 fastapi-structlog
 uvicorn[standard]
 alembic
+pycaret[full]
