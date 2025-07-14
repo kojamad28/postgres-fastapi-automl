@@ -28,9 +28,11 @@ def create_db_and_tables():
 
 
 async def get_session():
-    with Session(engine) as session:
-        try:
-            yield session
-        except:
-            session.rollback()
-            raise
+    session = Session(engine)
+    try:
+        yield session
+    except:
+        session.rollback()
+        raise
+    finally:
+        session.close()
