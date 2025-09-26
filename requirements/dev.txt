@@ -1,3 +1,5 @@
+uvicorn[standard]
+fastapi[all]
 -r common.txt
 black
 ruff
