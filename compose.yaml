@@ -23,6 +23,8 @@ services:
       - .:/usr/src
     expose:
       - "8000"
+    environment:
+      - DEBUG=False
     env_file:
       - ./db/.env
     depends_on:
