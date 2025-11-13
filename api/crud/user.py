@@ -18,7 +18,6 @@ def update_user(session: Session, target: str, updated_model: SQLModel):
             setattr(db_user, key, db_group)
         else:
             setattr(db_user, key, value)
-    session.add(db_user)
     session.commit()
     session.refresh(db_user)
     return db_user
