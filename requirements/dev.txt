@@ -10,3 +10,4 @@ pytest-randomly
 pytest-cov
 pytest-structlog
 factory-boy
+sphinx
